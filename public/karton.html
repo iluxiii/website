@@ -105,65 +105,6 @@
     </section>
   </main>
   <footer id="footer-placeholder"></footer>
-  <script>
-    let cart = [];
-    let cartCount = 0;
-
-    function addToCart(productId, productName, price) {
-      const existingItem = cart.find(item => item.id === productId);
-      if (existingItem) existingItem.quantity += 1;
-      else cart.push({ id: productId, name: productName, price: parseFloat(price), quantity: 1 });
-      cartCount = cart.reduce((t, item) => t + item.quantity, 0);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      localStorage.setItem('cartCount', cartCount);
-      updateCartIcon();
-      showToast(`Dodano do koszyka: ${productName}`);
-    }
-
-    function loadCartFromLocalStorage() {
-      const savedCart = localStorage.getItem('cart');
-      const savedCount = localStorage.getItem('cartCount');
-      if (savedCart) cart = JSON.parse(savedCart);
-      if (savedCount) cartCount = parseInt(savedCount);
-    }
-
-    function updateCartIcon() {
-      document.querySelectorAll('.cart-count').forEach(el => {
-        el.textContent = cartCount;
-        el.style.display = cartCount > 0 ? 'flex' : 'none';
-      });
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toast-message');
-      toastMessage.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 3000);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      loadCartFromLocalStorage();
-      updateCartIcon();
-
-      document.querySelector('.add-to-cart').addEventListener('click', () => {
-        const select = document.getElementById('size-option');
-        const option = select.selectedOptions[0];
-        const price = option.getAttribute('data-price');
-        const name = `Karton zwrotów (${option.textContent.split(' - ')[0]})`;
-        const id = `1-${option.value}`;
-        addToCart(id, name, price);
-      });
-
-      fetch('header.html').then(res => res.text()).then(data => {
-        document.getElementById('header-placeholder').innerHTML = data;
-        updateCartIcon();
-      });
-
-      fetch('footer.html').then(res => res.text()).then(data => {
-        document.getElementById('footer-placeholder').innerHTML = data;
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
