@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | BulkReturns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* FAQ Page Styles */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 30px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 20px;
+            max-height: 1000px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header placeholder -->
+    <header id="header-placeholder"></header>
+
+    <main class="page-container">
+        <section>
+            <h2 class="section-title">Najczęściej zadawane pytania (FAQ)</h2>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Jak działa system zakupu kartonów ABC?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Kupując karton ABC, otrzymujesz zestaw zwróconych produktów różnych kategorii. Każdy karton zawiera losowy asortyment z kategorii takich jak elektronika, odzież, AGD czy kosmetyki. Produkty mogą być w różnym stanie - od nowych w oryginalnych opakowaniach po używane.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Jakie produkty mogę znaleźć w kartonach?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>W kartonach można znaleźć różnorodne produkty, w tym:</p>
+                        <ul>
+                            <li>Elektronikę: smartfony, tablety, laptopy, słuchawki</li>
+                            <li>Odzież: ubrania damskie, męskie i dziecięce różnych marek</li>
+                            <li>AGD: małe urządzenia kuchenne, suszarki, żelazka</li>
+                            <li>Kosmetyki: perfumy, kremy, produkty do makijażu</li>
+                        </ul>
+                        <p>Zawartość każdego kartonu jest unikalna i stanowi niespodziankę.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Jak długo trwa dostawa?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standardowy czas dostawy to 2-3 dni robocze na terenie Polski. W przypadku palet zwrotów czas dostawy może wydłużyć się do 4-5 dni roboczych. Dokładny czas dostawy zależy od wybranej opcji przesyłki oraz lokalizacji.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Czy mogę zwrócić zakupiony karton?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Ze względu na specyfikę naszych produktów (zestawy niespodzianki), kartonów nie można zwrócić ani reklamować. Zachęcamy do zapoznania się z naszą polityką zwrotów w zakładce Warunki zakupu.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Jak mogę zapłacić za zamówienie?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Akceptujemy następujące formy płatności:</p>
+                        <ul>
+                            <li>Przelew bankowy</li>
+                            <li>Karty płatnicze (Visa, Mastercard)</li>
+                            <li>Płatności online (Przelewy24, PayPal)</li>
+                            <li>Płatność przy odbiorze (dla wybranych opcji dostawy)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Czy oferujecie rabaty przy większych zamówieniach?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tak, dla stałych klientów i przy większych zamówieniach oferujemy atrakcyjne rabaty:</p>
+                        <ul>
+                            <li>5% rabatu przy zakupie 5+ kartonów</li>
+                            <li>10% rabatu przy zakupie palety</li>
+                            <li>15% rabatu dla stałych klientów po 10+ zakupach</li>
+                        </ul>
+                        <p>Skontaktuj się z nami, aby uzyskać więcej informacji o programie rabatowym.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer placeholder -->
+    <footer id="footer-placeholder"></footer>
+
+    <script>
+        // FAQ Accordion
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    const answer = question.nextElementSibling;
+                    
+                    // Toggle active class
+                    faqItem.classList.toggle('active');
+                    answer.classList.toggle('active');
+                });
+            });
+            
+            // Load header and footer
+            loadComponent('header-placeholder', 'header.html');
+            loadComponent('footer-placeholder', 'footer.html');
+        });
+
+        function loadComponent(placeholderId, file) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', file, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById(placeholderId).innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

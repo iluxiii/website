@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karton zwrotów | BulkReturns</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .product-detail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .product-gallery {
+      flex: 1;
+      min-width: 300px;
+    }
+    .product-info-section {
+      flex: 1;
+      min-width: 300px;
+    }
+    .gallery-main {
+      height: 400px;
+      background-color: var(--light-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .gallery-main i {
+      font-size: 6rem;
+      color: var(--primary);
+    }
+    .option-selector {
+      margin: 20px 0;
+    }
+    .option-selector label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .product-description {
+      margin-top: 30px;
+      padding: 20px;
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle toast-icon"></i>
+    <span id="toast-message">Produkt dodany do koszyka!</span>
+  </div>
+  <header id="header-placeholder"></header>
+  <main class="page-container">
+    <section>
+      <h2 class="section-title">Karton zwrotów</h2>
+      <div class="product-detail">
+        <div class="product-gallery">
+          <div class="gallery-main">
+            <i class="fas fa-box"></i>
+          </div>
+        </div>
+        <div class="product-info-section">
+          <div class="product-info">
+            <div class="price">Od 299,99 zł</div>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <span>(78 opinii)</span>
+            </div>
+            <div class="option-selector">
+              <label for="size-option">Wybierz rozmiar kartonu:</label>
+              <select id="size-option" class="product-option">
+                <option value="small" data-price="299.99">Mały (5-7kg) - 299,99 zł</option>
+                <option value="medium" data-price="399.99">Średni (8-10kg) - 399,99 zł</option>
+                <option value="large" data-price="499.99">Duży (11-15kg) - 499,99 zł</option>
+              </select>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn add-to-cart" style="flex: 2;">Dodaj do koszyka</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-description">
+          <h3>Opis produktu</h3>
+          <p>Karton zwrotów to świetny wybór dla początkujących sprzedawców i małych firm. Zawiera mix produktów z różnych kategorii:</p>
+          <ul>
+            <li>Elektronika, odzież, kosmetyki, AGD</li>
+            <li>5–15 produktów w zależności od rozmiaru</li>
+            <li>Produkty niespodzianki – często w świetnym stanie</li>
+            <li>Szybka dostawa w 2-3 dni robocze</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer-placeholder"></footer>
+  <script>
+    let cart = [];
+    let cartCount = 0;
+
+    function addToCart(productId, productName, price) {
+      const existingItem = cart.find(item => item.id === productId);
+      if (existingItem) existingItem.quantity += 1;
+      else cart.push({ id: productId, name: productName, price: parseFloat(price), quantity: 1 });
+      cartCount = cart.reduce((t, item) => t + item.quantity, 0);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('cartCount', cartCount);
+      updateCartIcon();
+      showToast(`Dodano do koszyka: ${productName}`);
+    }
+
+    function loadCartFromLocalStorage() {
+      const savedCart = localStorage.getItem('cart');
+      const savedCount = localStorage.getItem('cartCount');
+      if (savedCart) cart = JSON.parse(savedCart);
+      if (savedCount) cartCount = parseInt(savedCount);
+    }
+
+    function updateCartIcon() {
+      document.querySelectorAll('.cart-count').forEach(el => {
+        el.textContent = cartCount;
+        el.style.display = cartCount > 0 ? 'flex' : 'none';
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCartFromLocalStorage();
+      updateCartIcon();
+
+      document.querySelector('.add-to-cart').addEventListener('click', () => {
+        const select = document.getElementById('size-option');
+        const option = select.selectedOptions[0];
+        const price = option.getAttribute('data-price');
+        const name = `Karton zwrotów (${option.textContent.split(' - ')[0]})`;
+        const id = `1-${option.value}`;
+        addToCart(id, name, price);
+      });
+
+      fetch('header.html').then(res => res.text()).then(data => {
+        document.getElementById('header-placeholder').innerHTML = data;
+        updateCartIcon();
+      });
+
+      fetch('footer.html').then(res => res.text()).then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+    });
+  </script>
+</body>
+</html>

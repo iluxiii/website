@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produkty | BulkReturns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <span id="toast-message">Produkt dodany do koszyka!</span>
+    </div>
+
+    <!-- Header placeholder -->
+    <header id="header-placeholder"></header>
+
+    <main class="page-container" id="main-content">
+        <section>
+            <h2 class="section-title">Nasze kategorie zwrotów</h2>
+            <div class="products-container">
+                <div class="product-card" data-base-id="1" data-base-name="Karton mix ABC">
+                    <div class="product-badge">TOP SPRZEDAŻ</div>
+                    <div class="product-img">
+                        <i class="fas fa-box fa-3x"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3>Karton mix ABC</h3>
+                        <div class="product-options">
+                            <select class="product-option">
+                                <option value="small" data-price="299.99">Mały karton (5-7kg) - 299,99 zł</option>
+                                <option value="medium" data-price="399.99">Średni karton (8-10kg) - 399,99 zł</option>
+                                <option value="large" data-price="499.99">Duży karton (11-15kg) - 499,99 zł</option>
+                            </select>
+                        </div>
+                        <p>Mix zwróconych produktów różnych kategorii w jednym kartonie</p>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">Dodaj do koszyka</button>
+                            <a href="karton.html" class="action-btn">Szczegóły</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-base-id="2" data-base-name="Paleta zwrotów">
+                    <div class="product-badge">PROFESJONALNE</div>
+                    <div class="product-img">
+                        <i class="fas fa-pallet fa-3x"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3>Paleta zwrotów</h3>
+                        <div class="product-options">
+                            <select class="product-option">
+                                <option value="small" data-price="1499.99">Paleta mała (10-15 kartonów) - 1499,99 zł</option>
+                                <option value="medium" data-price="2499.99">Paleta średnia (16-25 kartonów) - 2499,99 zł</option>
+                                <option value="large" data-price="3499.99">Paleta duża (26-35 kartonów) - 3499,99 zł</option>
+                            </select>
+                        </div>
+                        <p>Pełna paleta zwróconych produktów w różnych kategoriach</p>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">Dodaj do koszyka</button>
+                            <a href="paleta.html" class="action-btn">Szczegóły</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer placeholder -->
+    <footer id="footer-placeholder"></footer>
+
+    <script>
+        // Koszyk
+        let cart = [];
+        let cartCount = 0;
+
+        // Funkcje koszyka
+        function addToCart(productId, productName, price) {
+            // Sprawdź czy produkt już jest w koszyku
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: parseFloat(price),
+                    quantity: 1
+                });
+            }
+            
+            cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            saveCartToLocalStorage();
+            updateCartIcon();
+            showToast(`Dodano do koszyka: ${productName}`);
+        }
+
+        function saveCartToLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('cartCount', cartCount);
+        }
+
+        function loadCartFromLocalStorage() {
+            const savedCart = localStorage.getItem('cart');
+            const savedCount = localStorage.getItem('cartCount');
+            
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            
+            if (savedCount) {
+                cartCount = parseInt(savedCount);
+            }
+        }
+
+        // Funkcja do aktualizacji ikony koszyka
+        function updateCartIcon() {
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = cartCount;
+                el.style.display = cartCount > 0 ? 'flex' : 'none';
+            });
+        }
+
+        // Powiadomienia
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            if (toastMessage) toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Inicjalizacja
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wczytaj koszyk z localStorage
+            loadCartFromLocalStorage();
+            updateCartIcon();
+            
+            // Obsługa przycisków "Dodaj do koszyka"
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-to-cart')) {
+                    const productCard = e.target.closest('.product-card');
+                    if (productCard) {
+                        const baseId = productCard.getAttribute('data-base-id');
+                        const baseName = productCard.getAttribute('data-base-name');
+                        const optionSelect = productCard.querySelector('.product-option');
+                        const selectedOption = optionSelect.options[optionSelect.selectedIndex];
+                        
+                        const variant = selectedOption.value;
+                        const price = selectedOption.getAttribute('data-price');
+                        const productName = `${baseName} (${selectedOption.textContent.split(' - ')[0]})`;
+                        const productId = `${baseId}-${variant}`;
+                        
+                        addToCart(productId, productName, price);
+                    }
+                }
+            });
+            
+            // Dynamiczne ładowanie headera
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    updateCartIcon();
+                });
+            
+            // Dynamiczne ładowanie stopki
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        });
+    </script>
+</body>
+</html>

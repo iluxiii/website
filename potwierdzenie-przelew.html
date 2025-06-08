@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrukcje przelewu | BulkReturns</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .order-confirmation {
+      background: var(--white);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 650px;
+      margin: 60px auto;
+      text-align: center;
+    }
+    .order-confirmation i {
+      font-size: 64px;
+      color: #28a745;
+      margin-bottom: 20px;
+    }
+    .order-confirmation h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .order-confirmation .info-box {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: left;
+    }
+    .order-confirmation .info-box p {
+      margin: 8px 0;
+      font-size: 1.05rem;
+    }
+    .order-confirmation .btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header id="header-placeholder"></header>
+  <main class="page-container">
+    <section class="order-confirmation">
+      <i class="fas fa-check-circle"></i>
+      <h2>Zamówienie złożone</h2>
+      <p>Dziękujemy za złożenie zamówienia. Prosimy o dokonanie przelewu na poniższe dane:</p>
+      <div class="info-box">
+        <p><strong>Numer konta:</strong> 12 3456 7890 1234 5678 9012 3456</p>
+        <p><strong>Odbiorca:</strong> BulkReturns Sp. z o.o.</p>
+        <p><strong>Tytuł przelewu:</strong> Zamówienie internetowe BulkReturns</p>
+        <p><strong>Kwota:</strong> proszę wpisać wartość zamówienia</p>
+      </div>
+      <p>Potwierdzenie zamówienia zostało wysłane na Twój adres e-mail.</p>
+      <a href="index.html" class="btn btn-primary">Powrót do strony głównej</a>
+    </section>
+  </main>
+  <footer id="footer-placeholder"></footer>
+  <script>
+  fetch('header.html').then(r => r.text()).then(d => document.getElementById('header-placeholder').innerHTML = d);
+  fetch('footer.html').then(r => r.text()).then(d => document.getElementById('footer-placeholder').innerHTML = d);
+
+  const valid = sessionStorage.getItem('orderPlaced');
+  if (valid !== 'true') {
+    window.location.href = 'index.html';
+  } else {
+    sessionStorage.removeItem('orderPlaced'); // usuń po wejściu raz
+  }
+</script>
+</body>
+</html>

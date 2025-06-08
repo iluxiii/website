@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paleta zwrotów | BulkReturns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styles */
+        .product-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-gallery {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-info-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .gallery-main {
+            height: 400px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .gallery-main i {
+            font-size: 6rem;
+            color: var(--primary);
+        }
+        
+        .option-selector {
+            margin: 20px 0;
+        }
+        
+        .option-selector label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .product-description {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <span id="toast-message">Produkt dodany do koszyka!</span>
+    </div>
+
+    <!-- Header placeholder -->
+    <header id="header-placeholder"></header>
+
+    <main class="page-container">
+        <section>
+            <h2 class="section-title">Paleta zwrotów</h2>
+            
+            <div class="product-detail">
+                <div class="product-gallery">
+                    <div class="gallery-main">
+                        <i class="fas fa-pallet"></i>
+                    </div>
+                </div>
+                
+                <div class="product-info-section">
+                    <div class="product-info">
+                        <div class="price">Od 1499,99 zł</div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(56 opinii)</span>
+                        </div>
+                        
+                        <div class="option-selector">
+                            <label for="size-option">Wybierz rozmiar palety:</label>
+                            <select id="size-option" class="product-option">
+                                <option value="small" data-price="1499.99">Paleta mała (10-15 kartonów) - 1499,99 zł</option>
+                                <option value="medium" data-price="2499.99">Paleta średnia (16-25 kartonów) - 2499,99 zł</option>
+                                <option value="large" data-price="3499.99">Paleta duża (26-35 kartonów) - 3499,99 zł</option>
+                            </select>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart" style="flex: 2;">Dodaj do koszyka</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-description">
+                    <h3>Opis produktu</h3>
+                    <p>Paleta zwrotów to idealne rozwiązanie dla profesjonalnych odsprzedawców i sklepów internetowych. Każda paleta zawiera:</p>
+                    <ul>
+                        <li>10-35 kartonów mix ABC (w zależności od wybranego rozmiaru)</li>
+                        <li>Produkty z różnych kategorii: elektronika, odzież, AGD, kosmetyki</li>
+                        <li>Zawartość kartonów jest różnorodna i niespodziankowa</li>
+                        <li>Możliwość znalezienia unikatowych przedmiotów</li>
+                    </ul>
+                    <p>Zakup całej palety to najbardziej ekonomiczny sposób na zaopatrzenie swojego biznesu. Oszczędzasz na kosztach jednostkowych i masz pewność, że otrzymasz różnorodny towar.</p>
+                    <p>Palety są starannie zabezpieczone i przygotowane do transportu. Dostarczamy pod wskazany adres w ciągu 2-3 dni roboczych.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer placeholder -->
+    <footer id="footer-placeholder"></footer>
+
+    <script>
+        // Koszyk
+        let cart = [];
+        let cartCount = 0;
+
+        // Funkcje koszyka
+        function addToCart(productId, productName, price) {
+            // Sprawdź czy produkt już jest w koszyku
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: parseFloat(price),
+                    quantity: 1
+                });
+            }
+            
+            cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            saveCartToLocalStorage();
+            updateCartIcon();
+            showToast(`Dodano do koszyka: ${productName}`);
+        }
+
+        function saveCartToLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('cartCount', cartCount);
+        }
+
+        function loadCartFromLocalStorage() {
+            const savedCart = localStorage.getItem('cart');
+            const savedCount = localStorage.getItem('cartCount');
+            
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            
+            if (savedCount) {
+                cartCount = parseInt(savedCount);
+            }
+        }
+
+        // Funkcja do aktualizacji ikony koszyka
+        function updateCartIcon() {
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = cartCount;
+                el.style.display = cartCount > 0 ? 'flex' : 'none';
+            });
+        }
+
+        // Powiadomienia
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            if (toastMessage) toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Inicjalizacja
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wczytaj koszyk z localStorage
+            loadCartFromLocalStorage();
+            updateCartIcon();
+            
+            // Obsługa przycisku "Dodaj do koszyka"
+            document.querySelector('.add-to-cart').addEventListener('click', function() {
+                const optionSelect = document.getElementById('size-option');
+                const selectedOption = optionSelect.options[optionSelect.selectedIndex];
+                
+                const variant = selectedOption.value;
+                const price = selectedOption.getAttribute('data-price');
+                const productName = `Paleta zwrotów (${selectedOption.textContent.split(' - ')[0]})`;
+                const productId = `2-${variant}`;
+                
+                addToCart(productId, productName, price);
+            });
+            
+            // Dynamiczne ładowanie headera
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    updateCartIcon();
+                });
+            
+            // Dynamiczne ładowanie stopki
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        });
+    </script>
+</body>
+</html>

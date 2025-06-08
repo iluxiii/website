@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BulkReturns - Hurtowe zakupy zwrotów konsumenckich</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styles */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1595341888016-a392ef81b7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            margin-bottom: 50px;
+            border-radius: 10px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .testimonials {
+            background-color: var(--primary);
+            padding: 60px 20px;
+            color: white;
+            text-align: center;
+            margin: 50px 0;
+            border-radius: 10px;
+        }
+
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 250px;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .newsletter {
+            background-color: var(--light);
+            padding: 60px 20px;
+            text-align: center;
+            margin: 50px 0;
+            border-radius: 10px;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <span id="toast-message">Produkt dodany do koszyka!</span>
+    </div>
+
+    <!-- Header placeholder -->
+    <header id="header-placeholder"></header>
+
+    <!-- Main Content -->
+    <main class="page-container" id="main-content">
+        <!-- Home Page Content -->
+        <section id="home-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Hurtowe zakupy zwrotów konsumenckich</h2>
+                    <p>Odkryj niesamowite okazje w naszych kartonach ABC! Mix zwróconych produktów po atrakcyjnych cenach.</p>
+                    <a href="produkty.html" class="btn btn-primary">Zobacz oferty</a>
+                    <a href="faq.html" class="btn btn-outline">Jak to działa?</a>
+                </div>
+            </section>
+
+            <!-- Featured Products -->
+            <section>
+                <h2 class="section-title">Nasze kategorie</h2>
+                <div class="products-container">
+                    <div class="product-card" data-base-id="1" data-base-name="Karton mix ABC">
+                        <div class="product-badge">TOP SPRZEDAŻ</div>
+                        <div class="product-img">
+                            <i class="fas fa-box fa-3x"></i>
+                        </div>
+                        <div class="product-info">
+                            <h3>Karton mix ABC</h3>
+                            <div class="product-options">
+                                <select class="product-option" id="karton-option">
+                                    <option value="small" data-price="299.99">Mały karton (5-7kg) - 299,99 zł</option>
+                                    <option value="medium" data-price="399.99">Średni karton (8-10kg) - 399,99 zł</option>
+                                    <option value="large" data-price="499.99">Duży karton (11-15kg) - 499,99 zł</option>
+                                </select>
+                            </div>
+                            <p>Mix zwróconych produktów różnych kategorii w jednym kartonie</p>
+                            <div class="product-actions">
+                                <button class="action-btn add-to-cart">Dodaj do koszyka</button>
+                                <a href="karton.html" class="action-btn">Szczegóły</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card" data-base-id="2" data-base-name="Paleta zwrotów">
+                        <div class="product-badge">PROFESJONALNE</div>
+                        <div class="product-img">
+                            <i class="fas fa-pallet fa-3x"></i>
+                        </div>
+                        <div class="product-info">
+                            <h3>Paleta zwrotów</h3>
+                            <div class="product-options">
+                                <select class="product-option" id="paleta-option">
+                                    <option value="small" data-price="1499.99">Paleta mała (10-15 kartonów) - 1499,99 zł</option>
+                                    <option value="medium" data-price="2499.99">Paleta średnia (16-25 kartonów) - 2499,99 zł</option>
+                                    <option value="large" data-price="3499.99">Paleta duża (26-35 kartonów) - 3499,99 zł</option>
+                                </select>
+                            </div>
+                            <p>Pełna paleta zwróconych produktów w różnych kategoriach</p>
+                            <div class="product-actions">
+                                <button class="action-btn add-to-cart">Dodaj do koszyka</button>
+                                <a href="paleta.html" class="action-btn">Szczegóły</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="testimonials">
+                <h2 class="section-title">Opinie naszych klientów</h2>
+                <div class="testimonial-container">
+                    <div class="testimonial">
+                        <p>"W kartonach elektroniki znalazłem 2 sprawne laptopy i kilka smartfonów. Inwestycja zwróciła się 3-krotnie!"</p>
+                        <div class="testimonial-author">- Jan K., odsprzedawca</div>
+                    </div>
+                    <div class="testimonial">
+                        <p>"Kartony odzieży to świetny sposób na uzupełnienie asortymentu w moim sklepie internetowym. Jakość często lepsza niż oczekiwałem."</p>
+                        <div class="testimonial-author">- Anna M., właścicielka sklepu</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section>
+                <h2 class="section-title">Dlaczego BulkReturns?</h2>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <h3>Atrakcyjne ceny</h3>
+                        <p>Oszczędź nawet 70% w porównaniu do cen detalicznych</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3>Unikalne okazje</h3>
+                        <p>Znajdź produkty niedostępne w normalnej sprzedaży</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-recycle"></i>
+                        </div>
+                        <h3>Ekologia</h3>
+                        <p>Daj drugie życie produktom i zmniejszasz marnowanie</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3>Szybka dostawa</h3>
+                        <p>Dostarczamy w ciągu 2-3 dni roboczych</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Newsletter -->
+            <section class="newsletter">
+                <div class="newsletter-content">
+                    <h2>Zapisz się do newslettera</h2>
+                    <p>Otrzymuj informacje o nowych dostawach i specjalne oferty</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Wpisz swój adres email" required>
+                        <button type="submit" class="btn btn-primary">Zapisz się</button>
+                    </form>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- Footer placeholder -->
+    <footer id="footer-placeholder"></footer>
+
+    <script>
+        // Koszyk
+        let cart = [];
+        let cartCount = 0;
+
+        // Funkcje koszyka
+        function addToCart(productId, productName, price) {
+            // Sprawdź czy produkt już jest w koszyku
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: parseFloat(price),
+                    quantity: 1
+                });
+            }
+            
+            cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            saveCartToLocalStorage();
+            updateCartIcon();
+            showToast(`Dodano do koszyka: ${productName}`);
+        }
+
+        function saveCartToLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('cartCount', cartCount);
+        }
+
+        function loadCartFromLocalStorage() {
+            const savedCart = localStorage.getItem('cart');
+            const savedCount = localStorage.getItem('cartCount');
+            
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            
+            if (savedCount) {
+                cartCount = parseInt(savedCount);
+            }
+        }
+
+        // Funkcja do aktualizacji ikony koszyka
+        function updateCartIcon() {
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = cartCount;
+                el.style.display = cartCount > 0 ? 'flex' : 'none';
+            });
+        }
+
+        // Powiadomienia
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            if (toastMessage) toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Inicjalizacja
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wczytaj koszyk z localStorage
+            loadCartFromLocalStorage();
+            updateCartIcon();
+            
+            // Obsługa przycisków "Dodaj do koszyka"
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-to-cart')) {
+                    const productCard = e.target.closest('.product-card');
+                    if (productCard) {
+                        const baseId = productCard.getAttribute('data-base-id');
+                        const baseName = productCard.getAttribute('data-base-name');
+                        const optionSelect = productCard.querySelector('.product-option');
+                        const selectedOption = optionSelect.options[optionSelect.selectedIndex];
+                        
+                        const variant = selectedOption.value;
+                        const price = selectedOption.getAttribute('data-price');
+                        const productName = `${baseName} (${selectedOption.textContent.split(' - ')[0]})`;
+                        const productId = `${baseId}-${variant}`;
+                        
+                        addToCart(productId, productName, price);
+                    }
+                }
+            });
+            
+            // Obsługa formularza newslettera
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = this.querySelector('input').value;
+                    showToast(`Dziękujemy za zapisanie się na newsletter: ${email}`);
+                    this.reset();
+                });
+            }
+            
+            // Dynamiczne ładowanie headera
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    updateCartIcon();
+                });
+            
+            // Dynamiczne ładowanie stopki
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        });
+    </script>
+
+</body>
+</html>
