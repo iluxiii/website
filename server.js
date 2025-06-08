@@ -1,18 +1,62 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { Pool } = require('pg');
+import express from 'express';
+import bodyParser from 'body-parser';
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
+
+// Wczytaj zmienne środowiskowe
+dotenv.config();
+
 const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+app.use(express.static('public')); // Serwowanie plików frontendu
 
 // Konfiguracja połączenia z PostgreSQL
 const pool = new Pool({
-  connectionString: "postgresql://zamowienia_8cla_user:qqD2p9nz2OBmFFPRrD2FTgcXrzgCwcYh@dpg-d12u57be5dus73cq9cr0-a.frankfurt-postgres.render.com/zamowienia_8cla",
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false // Wymagane dla Render.com
   }
 });
+
+// Funkcja inicjalizująca tabele w bazie danych
+async function initializeDatabase() {
+  try {
+    const client = await pool.connect();
+    
+    // Tworzenie tabeli orders
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS orders (
+        id SERIAL PRIMARY KEY,
+        customer_name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        phone VARCHAR(20),
+        address TEXT NOT NULL,
+        payment_method VARCHAR(50) NOT NULL,
+        total_amount NUMERIC(10,2) NOT NULL,
+        order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    
+    // Tworzenie tabeli order_items
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS order_items (
+        id SERIAL PRIMARY KEY,
+        order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE,
+        product_id VARCHAR(50) NOT NULL,
+        product_name VARCHAR(100) NOT NULL,
+        quantity INTEGER NOT NULL,
+        unit_price NUMERIC(10,2) NOT NULL
+      );
+    `);
+    
+    console.log('Tabele zostały utworzone lub już istnieją');
+    client.release();
+  } catch (error) {
+    console.error('Błąd podczas tworzenia tabel:', error);
+  }
+}
 
 // Endpoint do zapisu zamówień
 app.post('/api/order', async (req, res) => {
@@ -71,8 +115,9 @@ app.post('/api/order', async (req, res) => {
   }
 });
 
-// Start serwera
+// Start serwera i inicjalizacja bazy
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Serwer działa na porcie ${PORT}`);
+  await initializeDatabase();
 });
