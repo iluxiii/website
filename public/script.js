@@ -176,7 +176,6 @@ function initCartPage() {
             window.location.href = 'zamowienie.html';
         });
     }
-}
 
 // ===== HEADER FUNCTIONS =====
 function setupMobileMenu() {
