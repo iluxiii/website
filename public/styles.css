@@ -481,8 +481,8 @@ footer {
   max-width: 1200px;
   margin: 0 auto;
   justify-content: center;
-  text-align: left; /* zmiana z center na left dla lepszego układu na większych ekranach */
-  padding: 0 1rem; /* dodany padding po bokach */
+  text-align: left;
+  padding: 0 1rem;
 }
 
 .footer-section {
@@ -527,7 +527,7 @@ footer {
 .footer-section p {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* zmiana z center na flex-start dla lepszego wyrównania */
+  justify-content: flex-start;
   gap: 12px;
   margin-bottom: 1rem;
   font-size: 1.05rem;
@@ -549,7 +549,7 @@ footer {
   .footer-content {
     grid-template-columns: 1fr;
     gap: 2.5rem;
-    text-align: center; /* na mniejszych ekranach wracamy do center */
+    text-align: center;
     padding: 0 1.5rem;
   }
 
@@ -558,7 +558,7 @@ footer {
   }
 
   .footer-section p {
-    justify-content: center; /* wyrównanie p na center */
+    justify-content: center;
   }
 }
 
