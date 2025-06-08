@@ -169,20 +169,32 @@ function initCartPage() {
     const checkoutBtn = document.getElementById('checkout-button');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
-            window.location.href = 'zamowienie';
+            window.location.href = 'zamowienie.html';
         });
     }
 }
 
-// ===== NAVIGATION HANDLING =====
+// ===== HEADER FUNCTIONS =====
+function setupMobileMenu() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navContainer = document.querySelector('.nav-container');
+    
+    if (menuToggle && navContainer) {
+        menuToggle.addEventListener('click', () => {
+            navContainer.classList.toggle('active');
+        });
+    }
+}
+
 function setupNavigation() {
     // Aktualne ścieżki
     const currentPath = window.location.pathname;
+    const pageName = currentPath.split('/').pop().replace('.html', '') || 'index';
     
     // Podświetlanie aktywnego linku
     document.querySelectorAll('.nav-links a').forEach(link => {
-        const linkPath = link.getAttribute('href');
-        if (currentPath.includes(linkPath)) {
+        const linkPath = link.getAttribute('href').replace('.html', '');
+        if (pageName === linkPath) {
             link.classList.add('active');
         }
     });
@@ -201,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('header-placeholder').innerHTML = data;
             updateCartIcon();
             setupNavigation();
+            setupMobileMenu();
         })
         .catch(error => console.error('Error loading header:', error));
     
@@ -214,11 +227,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Inicjalizacja specyficzna dla strony
     const path = window.location.pathname;
+    const pageName = path.split('/').pop().replace('.html', '');
     
-    if (path.includes('produkty') || path.includes('karton') || path.includes('paleta')) {
+    if (pageName === 'produkty' || pageName === 'karton' || pageName === 'paleta') {
         initProductPages();
     } 
-    else if (path.includes('koszyk')) {
+    else if (pageName === 'koszyk') {
         initCartPage();
+    }
+    
+    // Obsługa newslettera
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            showToast(`Dziękujemy za zapisanie się na newsletter: ${email}`);
+            this.reset();
+        });
     }
 });
