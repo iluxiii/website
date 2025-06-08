@@ -1,10 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { Pool } from 'pg';
-import dotenv from 'dotenv';
-
-// Wczytaj zmienne środowiskowe
-dotenv.config();
 
 const app = express();
 
@@ -12,9 +8,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public')); // Serwowanie plików frontendu
 
-// Konfiguracja połączenia z PostgreSQL
+// Konfiguracja połączenia z PostgreSQL (dane bezpośrednio w kodzie)
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: "postgresql://zamowienia_8cla_user:qqD2p9nz2OBmFFPRrD2FTgcXrzgCwcYh@dpg-d12u57be5dus73cq9cr0-a.frankfurt-postgres.render.com/zamowienia_8cla",
   ssl: {
     rejectUnauthorized: false // Wymagane dla Render.com
   }
@@ -116,7 +112,7 @@ app.post('/api/order', async (req, res) => {
 });
 
 // Start serwera i inicjalizacja bazy
-const PORT = process.env.PORT || 3000;
+const PORT = 10000; // Port bezpośrednio w kodzie
 app.listen(PORT, async () => {
   console.log(`Serwer działa na porcie ${PORT}`);
   await initializeDatabase();
