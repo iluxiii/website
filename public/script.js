@@ -214,11 +214,17 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('header.html')
         .then(response => response.text())
         .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
-            updateCartIcon();
-            setupNavigation();
-            setupMobileMenu();
+        const headerEl = document.getElementById('header-placeholder');
+        headerEl.innerHTML = data;
+
+        // Odczekaj aż DOM zaktualizuje się o header
+        setTimeout(() => {
+        updateCartIcon();
+        setupNavigation();
+        setupMobileMenu();
+        }, 0);
         })
+
         .catch(error => console.error('Error loading header:', error));
     
     // Dynamiczne ładowanie stopki
