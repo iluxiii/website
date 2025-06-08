@@ -1,74 +1,33 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Koszyk | BulkReturns</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    .cart-container {
-      background: var(--white);
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      justify-content: space-between;
-      padding: 15px 0;
-      border-bottom: 1px solid var(--light-gray);
-    }
-    .cart-item i {
-      font-size: 1.5rem;
-      color: var(--primary);
-    }
-    .cart-item:last-child {
-      border-bottom: none;
-    }
-    .cart-summary {
-      margin-top: 30px;
-      text-align: right;
-    }
-    .cart-summary strong {
-      font-size: 1.2rem;
-    }
-    .item-desc {
-      flex: 1;
-    }
-    .quantity-input {
-      width: 50px;
-      text-align: center;
-      padding: 6px;
-      border-radius: 4px;
-      border: 1px solid var(--light-gray);
-    }
-    .remove-btn {
-      background: none;
-      border: none;
-      color: var(--danger);
-      cursor: pointer;
-      font-size: 1rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koszyk - BulkReturns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header id="header-placeholder"></header>
-<main class="page-container">
-  <section>
-    <h2 class="section-title">Twój koszyk</h2>
-    <div class="cart-container">
-      <div id="cart-items"></div>
-      <div class="cart-summary">
-        <p><strong>Razem: <span id="cart-total">0 zł</span></strong></p>
-        <button class="btn btn-primary" id="checkout-button">Przejdź do zamówienia</button>
-      </div>
-    </div>
-  </section>
-</main>
-<footer id="footer-placeholder"></footer>
-<script src="script.js"></script>
+    <!-- Header placeholder -->
+    <div id="header-placeholder"></div>
+
+    <main class="page-container cart-page">
+        <h1 class="cart-title">Twój koszyk</h1>
+        
+        <div id="cart-items" class="cart-items-container"></div>
+        
+        <div class="cart-summary">
+            <div class="cart-total">
+                <strong>Razem:</strong> <span id="cart-total">0.00 zł</span>
+            </div>
+            <button id="checkout-button" class="btn btn-primary">Przejdź do zamówienia</button>
+        </div>
+    </main>
+
+    <!-- Footer placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>
