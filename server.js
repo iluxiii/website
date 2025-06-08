@@ -6,17 +6,17 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(express.static('public')); // Serwowanie plików frontendu
+app.use(express.static('public'));
 
-// Konfiguracja połączenia z PostgreSQL (dane bezpośrednio w kodzie)
+// Konfiguracja PostgreSQL
 const pool = new Pool({
   connectionString: "postgresql://zamowienia_8cla_user:qqD2p9nz2OBmFFPRrD2FTgcXrzgCwcYh@dpg-d12u57be5dus73cq9cr0-a.frankfurt-postgres.render.com/zamowienia_8cla",
   ssl: {
-    rejectUnauthorized: false // Wymagane dla Render.com
+    rejectUnauthorized: false
   }
 });
 
-// Funkcja inicjalizująca tabele w bazie danych
+// Funkcja inicjalizująca tabele
 async function initializeDatabase() {
   try {
     const client = await pool.connect();
@@ -47,10 +47,10 @@ async function initializeDatabase() {
       );
     `);
     
-    console.log('Tabele zostały utworzone lub już istnieją');
+    console.log('Tabele zostały zweryfikowane');
     client.release();
   } catch (error) {
-    console.error('Błąd podczas tworzenia tabel:', error);
+    console.error('Błąd podczas inicjalizacji tabel:', error);
   }
 }
 
@@ -60,46 +60,29 @@ app.post('/api/order', async (req, res) => {
 
   try {
     const client = await pool.connect();
-    
-    // Obliczanie sumy zamówienia
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
-    // Rozpoczęcie transakcji
     await client.query('BEGIN');
 
-    // Zapis nagłówka zamówienia
-    const orderQuery = `
-      INSERT INTO orders (customer_name, email, phone, address, payment_method, total_amount)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING id`;
-    
-    const orderResult = await client.query(orderQuery, [
-      name,
-      email,
-      phone,
-      address,
-      payment,
-      total
-    ]);
+    // Zapisz nagłówek zamówienia
+    const orderResult = await client.query(
+      `INSERT INTO orders (customer_name, email, phone, address, payment_method, total_amount)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING id`,
+      [name, email, phone, address, payment, total]
+    );
     
     const orderId = orderResult.rows[0].id;
 
-    // Zapis pozycji zamówienia
+    // Zapisz pozycje zamówienia
     for (const item of cart) {
-      const itemQuery = `
-        INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price)
-        VALUES ($1, $2, $3, $4, $5)`;
-      
-      await client.query(itemQuery, [
-        orderId,
-        item.id,
-        item.name,
-        item.quantity,
-        item.price
-      ]);
+      await client.query(
+        `INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [orderId, item.id, item.name, item.quantity, item.price]
+      );
     }
 
-    // Zatwierdzenie transakcji
     await client.query('COMMIT');
     client.release();
 
@@ -111,8 +94,8 @@ app.post('/api/order', async (req, res) => {
   }
 });
 
-// Start serwera i inicjalizacja bazy
-const PORT = 10000; // Port bezpośrednio w kodzie
+// Start serwera
+const PORT = 10000;
 app.listen(PORT, async () => {
   console.log(`Serwer działa na porcie ${PORT}`);
   await initializeDatabase();
