@@ -1,116 +1,78 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
-const path = require('path');
 const { Pool } = require('pg');
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(bodyParser.json());
 
 // Konfiguracja połączenia z PostgreSQL
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: "postgresql://zamowienia_8cla_user:qqD2p9nz2OBmFFPRrD2FTgcXrzgCwcYh@dpg-d12u57be5dus73cq9cr0-a.frankfurt-postgres.render.com/zamowienia_8cla",
   ssl: {
-    rejectUnauthorized: false
+    rejectUnauthorized: false // Wymagane dla Render.com
   }
 });
-
-// Sprawdzenie połączenia z bazą danych przy starcie
-async function initializeDatabase() {
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS orders (
-        id SERIAL PRIMARY KEY,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        customer_name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        phone VARCHAR(50) NOT NULL,
-        address TEXT NOT NULL,
-        payment_method VARCHAR(50) NOT NULL,
-        cart_items JSONB NOT NULL,
-        total_amount NUMERIC(10, 2) NOT NULL
-      )
-    `);
-    console.log('Database connection established and table verified');
-  } catch (err) {
-    console.error('Database initialization failed:', err);
-    process.exit(1);
-  }
-}
-
-// Middleware
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint do zapisu zamówień
 app.post('/api/order', async (req, res) => {
-  try {
-    const { name, email, phone, address, payment, cart } = req.body;
-    
-    // Walidacja danych
-    if (!name || !email || !phone || !address || !payment || !cart || cart.length === 0) {
-      return res.status(400).json({ 
-        success: false,
-        message: 'Brakujące dane zamówienia' 
-      });
-    }
+  const { name, email, phone, address, payment, cart } = req.body;
 
-    // Obliczanie łącznej kwoty
+  try {
+    const client = await pool.connect();
+    
+    // Obliczanie sumy zamówienia
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
-    // Zapis do bazy danych
-    const result = await pool.query(
-      `INSERT INTO orders (
-        customer_name, 
-        email, 
-        phone, 
-        address, 
-        payment_method, 
-        cart_items,
-        total_amount
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
-      [name, email, phone, address, payment, JSON.stringify(cart), total]
-    );
+    // Rozpoczęcie transakcji
+    await client.query('BEGIN');
 
-    res.status(201).json({ 
-      success: true,
-      orderId: result.rows[0].id,
-      paymentMethod: payment
-    });
+    // Zapis nagłówka zamówienia
+    const orderQuery = `
+      INSERT INTO orders (customer_name, email, phone, address, payment_method, total_amount)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id`;
     
+    const orderResult = await client.query(orderQuery, [
+      name,
+      email,
+      phone,
+      address,
+      payment,
+      total
+    ]);
+    
+    const orderId = orderResult.rows[0].id;
+
+    // Zapis pozycji zamówienia
+    for (const item of cart) {
+      const itemQuery = `
+        INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price)
+        VALUES ($1, $2, $3, $4, $5)`;
+      
+      await client.query(itemQuery, [
+        orderId,
+        item.id,
+        item.name,
+        item.quantity,
+        item.price
+      ]);
+    }
+
+    // Zatwierdzenie transakcji
+    await client.query('COMMIT');
+    client.release();
+
+    res.status(200).json({ success: true });
+
   } catch (error) {
     console.error('Błąd zapisu zamówienia:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Błąd serwera podczas przetwarzania zamówienia' 
-    });
-  }
-});
-
-// Endpoint do pobierania zamówień (dla panelu admina)
-app.get('/api/orders', async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT * FROM orders 
-      ORDER BY created_at DESC
-    `);
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Błąd pobierania zamówień:', error);
     res.status(500).json({ error: 'Błąd serwera' });
   }
 });
 
-// Routing SPA
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Inicjalizacja i start serwera
-initializeDatabase().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Serwer działa na porcie ${PORT}`);
-    console.log(`Podgląd zamówień: http://localhost:${PORT}/api/orders`);
-  });
+// Start serwera
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Serwer działa na porcie ${PORT}`);
 });
