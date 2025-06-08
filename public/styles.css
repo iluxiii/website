@@ -1,6 +1,6 @@
 /* ===== GLOBAL STYLES ===== */
 :root {
-  --primary: #28a745;   /* Green */
+  --primary-color: #28a745;   /* Green */
   --secondary-color: #007bff; /* Blue */
   --accent-color: #ffc107;    /* Yellow */
   --text-dark: #343a40;
