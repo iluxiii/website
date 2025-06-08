@@ -100,35 +100,39 @@ function initCartPage() {
     }
 
     function renderCart() {
-        const container = document.getElementById('cart-items');
-        if (!container) return;
-        
-        const totalField = document.getElementById('cart-total');
-        container.innerHTML = '';
-        let total = 0;
+    const container = document.getElementById('cart-items');
+    if (!container) return;
+    
+    const totalField = document.getElementById('cart-total');
+    container.innerHTML = '';
+    let total = 0;
 
-        if (cart.length === 0) {
-            container.innerHTML = '<p>Twój koszyk jest pusty.</p>';
-            if (document.querySelector('.cart-summary')) {
-                document.querySelector('.cart-summary').style.display = 'none';
-            }
-            return;
+    if (cart.length === 0) {
+        container.innerHTML = '<p class="empty-cart-message">Twój koszyk jest pusty.</p>';
+        if (document.querySelector('.cart-summary')) {
+            document.querySelector('.cart-summary').style.display = 'none';
         }
+        return;
+    }
 
-        cart.forEach((item, index) => {
-            const iconClass = getIcon(item.id);
-            const div = document.createElement('div');
-            div.className = 'cart-item';
-            div.innerHTML = `
-                <i class="fas ${iconClass}"></i>
-                <div class="item-desc">${item.name}</div>
-                <input type="number" class="quantity-input" min="1" value="${item.quantity}" data-index="${index}">
-                <div><strong>${(item.price * item.quantity).toFixed(2)} zł</strong></div>
-                <button class="remove-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
-            `;
-            container.appendChild(div);
-            total += item.price * item.quantity;
-        });
+    cart.forEach((item, index) => {
+        const iconClass = getIcon(item.id);
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+            <i class="fas ${iconClass}"></i>
+            <div class="item-desc">${item.name}</div>
+            <input type="number" class="quantity-input" min="1" value="${item.quantity}" data-index="${index}">
+            <div class="cart-item-price"><strong>${(item.price * item.quantity).toFixed(2)} zł</strong></div>
+            <button class="remove-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
+        `;
+        container.appendChild(div);
+        total += item.price * item.quantity;
+    });
+
+    if (totalField) totalField.textContent = `${total.toFixed(2)} zł`;
+    addCartEventListeners();
+    }
 
         if (totalField) totalField.textContent = `${total.toFixed(2)} zł`;
         addCartEventListeners();
