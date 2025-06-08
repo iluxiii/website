@@ -5,323 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BulkReturns - Hurtowe zakupy zwrotów konsumenckich</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        /* ===== GLOBAL STYLES ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #2e7d32;
-            --primary-dark: #1b5e20;
-            --secondary: #ff9800;
-            --light: #f8f9fa;
-            --dark: #212121;
-            --gray: #757575;
-            --light-gray: #e0e0e0;
-            --danger: #d32f2f;
-            --white: #ffffff;
-            --page-bg: #f5f7fa;
-        }
-
-        body {
-            background-color: var(--page-bg);
-            color: var(--dark);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* ===== HEADER STYLES ===== */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            width: 100%;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--primary-dark);
-        }
-
-        .logo img {
-            height: 40px;
-        }
-
-        .logo h1 {
-            font-size: 1.8rem;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--dark);
-            cursor: pointer;
-        }
-
-        .nav-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 8px 0;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-links a.active {
-            color: var(--primary);
-        }
-
-        .nav-links a.active:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--primary);
-        }
-
-        .nav-icons {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .nav-icon {
-            position: relative;
-            font-size: 1.2rem;
-            color: var(--dark);
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .cart-icon {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: var(--danger);
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-        }
-
-        /* ===== PAGE CONTAINER ===== */
-        .page-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 70vh;
-            flex: 1;
-        }
-
-        /* ===== BUTTONS ===== */
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--secondary);
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn:hover {
-            background-color: #e68a00;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--white);
-            color: var(--white);
-        }
-
-        .btn-outline:hover {
-            background: var(--white);
-            color: var(--primary);
-        }
-
-        /* ===== SECTION TITLES ===== */
-        .section-title {
-            text-align: center;
-            margin: 50px 0 30px;
-            color: var(--dark);
-            position: relative;
-        }
-
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--secondary);
-        }
-
-        /* ===== PRODUCT CARDS ===== */
-        .products-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-        }
-
-        .product-card {
-            background: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            position: relative;
-            width: calc(50% - 15px);
-            min-width: 300px;
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--primary);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .product-img {
-            height: 200px;
-            background-color: var(--light-gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: var(--primary);
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-
-        .product-options {
-            margin: 15px 0;
-            width: 100%;
-        }
-
-        .product-options select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--light-gray);
-            border-radius: 4px;
-            background-color: var(--white);
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .product-info p {
-            margin-bottom: 15px;
-            color: var(--gray);
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .action-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        /* ===== HERO SECTION ===== */
+        /* Page-specific styles */
         .hero {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1595341888016-a392ef81b7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-            min-height: 300px;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
-            padding: 60px 20px;
+            padding: 0 20px;
             margin-bottom: 50px;
             border-radius: 10px;
         }
@@ -331,18 +26,17 @@
         }
 
         .hero h2 {
-            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-size: 3rem;
             margin-bottom: 20px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
         .hero p {
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-size: 1.2rem;
             margin-bottom: 30px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* ===== TESTIMONIALS ===== */
         .testimonials {
             background-color: var(--primary);
             padding: 60px 20px;
@@ -374,7 +68,6 @@
             font-weight: bold;
         }
 
-        /* ===== FEATURES ===== */
         .features {
             display: flex;
             justify-content: center;
@@ -406,7 +99,6 @@
             font-size: 1.8rem;
         }
 
-        /* ===== NEWSLETTER ===== */
         .newsletter {
             background-color: var(--light);
             padding: 60px 20px;
@@ -433,237 +125,6 @@
             border-radius: 4px;
             font-size: 1rem;
         }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background-color: var(--dark);
-            color: var(--light);
-            padding: 40px 0 0;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .footer-column h3 {
-            margin-bottom: 20px;
-            color: var(--white);
-            font-size: 1.3rem;
-        }
-
-        .footer-column p {
-            margin-bottom: 20px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: var(--light-gray);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--white);
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .social-icon:hover {
-            background-color: var(--primary);
-        }
-
-        .copyright {
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: var(--light-gray);
-            font-size: 0.9rem;
-        }
-
-        /* ===== TOAST NOTIFICATION ===== */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            z-index: 1000;
-            transform: translateX(150%);
-            transition: transform 0.3s ease-out;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast-icon {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        /* ===== MOBILE RESPONSIVENESS ===== */
-        @media (max-width: 992px) {
-            /* Tablet adjustments */
-            .products-container {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            
-            .product-card {
-                width: calc(50% - 15px);
-            }
-            
-            .features {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .feature {
-                width: calc(50% - 15px);
-            }
-        }
-
-        @media (max-width: 768px) {
-            /* Mobile menu */
-            .menu-toggle {
-                display: block;
-            }
-            
-            .nav-container {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-                padding-top: 20px;
-            }
-            
-            .nav-links {
-                flex-direction: column;
-                gap: 10px;
-                width: 100%;
-                margin-bottom: 20px;
-            }
-            
-            .nav-icons {
-                justify-content: center;
-            }
-            
-            .nav-active {
-                display: flex;
-            }
-            
-            /* Hero adjustments */
-            .hero-content .btn {
-                width: 100%;
-                margin: 5px 0;
-            }
-            
-            /* Product adjustments */
-            .product-card {
-                width: 100%;
-            }
-            
-            .feature {
-                width: 100%;
-            }
-            
-            /* Footer adjustments */
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-column {
-                margin-bottom: 30px;
-            }
-            
-            /* Newsletter form */
-            .newsletter-form {
-                flex-direction: column;
-            }
-            
-            .newsletter-form input,
-            .newsletter-form .btn {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            /* Small mobile adjustments */
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-            
-            .product-img {
-                height: 150px;
-            }
-            
-            .testimonial {
-                padding: 15px;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .cart-count {
-                top: -5px;
-                right: -5px;
-                width: 18px;
-                height: 18px;
-                font-size: 10px;
-            }
-        }
-
-        /* Mobile menu animation */
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .nav-active {
-            animation: slideDown 0.3s ease-out;
-        }
     </style>
 </head>
 <body>
@@ -673,43 +134,8 @@
         <span id="toast-message">Produkt dodany do koszyka!</span>
     </div>
 
-    <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <div class="navbar-container">
-                <a href="/" class="logo" id="main-logo">
-                    <i class="fas fa-box-open fa-2x"></i>
-                    <h1>BulkReturns</h1>
-                </a>
-
-                <!-- Mobile Menu Toggle -->
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-
-                <div class="nav-container">
-                    <div class="nav-links">
-                        <a href="/" id="home-link">Strona główna</a>
-                        <a href="produkty" id="products-link">Produkty</a>
-                        <a href="faq" id="faq-link">FAQ</a>
-                        <a href="kontakt" id="contact-link">Kontakt</a>
-                    </div>
-                    <div class="nav-icons">
-                        <a href="#" class="nav-icon">
-                            <i class="fas fa-search"></i>
-                        </a>
-                        <a href="koszyk" class="nav-icon cart-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-count">0</span>
-                        </a>
-                        <a href="#" class="nav-icon">
-                            <i class="fas fa-user"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <!-- Header placeholder -->
+    <header id="header-placeholder"></header>
 
     <!-- Main Content -->
     <main class="page-container" id="main-content">
@@ -720,8 +146,8 @@
                 <div class="hero-content">
                     <h2>Hurtowe zakupy zwrotów konsumenckich</h2>
                     <p>Odkryj niesamowite okazje w naszych kartonach ABC! Mix zwróconych produktów po atrakcyjnych cenach.</p>
-                    <a href="produkty" class="btn btn-primary">Zobacz oferty</a>
-                    <a href="faq" class="btn btn-outline">Jak to działa?</a>
+                    <a href="produkty.html" class="btn btn-primary">Zobacz oferty</a>
+                    <a href="faq.html" class="btn btn-outline">Jak to działa?</a>
                 </div>
             </section>
 
@@ -746,7 +172,7 @@
                             <p>Mix zwróconych produktów różnych kategorii w jednym kartonie</p>
                             <div class="product-actions">
                                 <button class="action-btn add-to-cart">Dodaj do koszyka</button>
-                                <a href="karton" class="action-btn">Szczegóły</a>
+                                <a href="karton.html" class="action-btn">Szczegóły</a>
                             </div>
                         </div>
                     </div>
@@ -767,7 +193,7 @@
                             <p>Pełna paleta zwróconych produktów w różnych kategoriach</p>
                             <div class="product-actions">
                                 <button class="action-btn add-to-cart">Dodaj do koszyka</button>
-                                <a href="paleta" class="action-btn">Szczegóły</a>
+                                <a href="paleta.html" class="action-btn">Szczegóły</a>
                             </div>
                         </div>
                     </div>
@@ -838,50 +264,8 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>BulkReturns</h3>
-                <p>Hurtowe zakupy zwrotów konsumenckich. Najlepsze okazje na rynku!</p>
-                <div class="social-icons">
-                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <h3>Sklep</h3>
-                <ul class="footer-links">
-                    <li><a href="produkty">Wszystkie produkty</a></li>
-                    <li><a href="karton">Kartony mix ABC</a></li>
-                    <li><a href="paleta">Palety zwrotów</a></li>
-                    <li><a href="promocje">Promocje</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Informacje</h3>
-                <ul class="footer-links">
-                    <li><a href="faq">Jak to działa?</a></li>
-                    <li><a href="dostawa">Dostawa i płatności</a></li>
-                    <li><a href="zwroty">Zwroty i reklamacje</a></li>
-                    <li><a href="regulamin">Regulamin</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Kontakt</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> info@bulkreturns.pl</li>
-                    <li><i class="fas fa-phone"></i> +48 123 456 789</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Warszawa, ul. Hurtowa 15</li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 BulkReturns. Wszelkie prawa zastrzeżone.</p>
-        </div>
-    </footer>
+    <!-- Footer placeholder -->
+    <footer id="footer-placeholder"></footer>
 
     <script>
         // Koszyk
@@ -949,24 +333,8 @@
             }, 3000);
         }
 
-        // Mobile menu toggle
+        // Inicjalizacja
         document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            if (menuToggle) {
-                menuToggle.addEventListener('click', () => {
-                    const navContainer = document.querySelector('.nav-container');
-                    navContainer.classList.toggle('nav-active');
-                    
-                    // Toggle hamburger/close icon
-                    const icon = menuToggle.querySelector('i');
-                    if (icon.classList.contains('fa-bars')) {
-                        icon.classList.replace('fa-bars', 'fa-times');
-                    } else {
-                        icon.classList.replace('fa-times', 'fa-bars');
-                    }
-                });
-            }
-            
             // Wczytaj koszyk z localStorage
             loadCartFromLocalStorage();
             updateCartIcon();
@@ -1001,7 +369,23 @@
                     this.reset();
                 });
             }
+            
+            // Dynamiczne ładowanie headera
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    updateCartIcon();
+                });
+            
+            // Dynamiczne ładowanie stopki
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
         });
     </script>
+
 </body>
 </html>
