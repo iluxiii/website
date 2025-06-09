@@ -803,28 +803,41 @@
     </div>
 
     <!-- Header placeholder -->
-    <div id="header-placeholder">
-        <header>
-            <div class="navbar-container">
-                <div class="logo">
-                    <h1>BulkReturns</h1>
-                </div>
-                <div class="nav-container">
-                    <nav class="nav-links">
-                        <a href="#" class="active">Strona główna</a>
-                        <a href="produkty.html">Produkty</a>
-                        <a href="faq.html">Jak to działa?</a>
-                        <a href="kontakt.html">Kontakt</a>
-                    </nav>
-                    <div class="cart-icon">
-                        <a href="koszyk.html"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
-                    </div>
-                    <div class="menu-toggle">
-                        <i class="fas fa-bars"></i>
-                    </div>
-                </div>
-            </div>
-        </header>
+<div id="header-placeholder"></div>
+
+<script>
+// Funkcja ładująca header
+function loadHeader() {
+  const headerPlaceholder = document.getElementById('header-placeholder');
+  
+  fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      headerPlaceholder.innerHTML = data;
+      attachHeaderEventListeners();
+    })
+    .catch(error => {
+      console.error('Błąd ładowania headera:', error);
+      headerPlaceholder.innerHTML = '<p>Błąd ładowania nagłówka</p>';
+    });
+}
+
+// Funkcja dołączająca event listeners
+function attachHeaderEventListeners() {
+  // Obsługa menu mobilnego
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+  }
+}
+
+// Załaduj header po załadowaniu DOM
+document.addEventListener('DOMContentLoaded', loadHeader);
+</script>
     </div>
 
     <!-- Main Content -->
@@ -1004,12 +1017,12 @@
         const cartCountElement = document.getElementById('cart-count');
         
         cartButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                cartCount++;
-                cartCountElement.textContent = cartCount;
-                showToast('Produkt dodany do koszyka!');
-            });
-        });
+  button.addEventListener('click', () => {
+    cartCount++;
+    updateCartCount(cartCount);
+    showToast('Produkt dodany do koszyka!');
+  });
+});
         
         // Newsletter form
         const newsletterForm = document.querySelector('.newsletter-form');
