@@ -6,7 +6,7 @@
   --text-dark: #343a40;
   --text-light: #f8f9fa;
   --light-gray: #e9ecef;
-  --dark-green: #218838;
+  --dark-green: #1b6b2c; /* trochę ciemniejszy zielony dla hover */
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --border-radius: 8px;
 }
@@ -21,7 +21,7 @@ body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.7;
   color: var(--text-dark);
-  background-color: #f8f9fa;
+  background-color: var(--text-light);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -88,6 +88,7 @@ img {
   transition: all 0.3s ease;
   border: 2px solid transparent;
   font-size: 1rem;
+  user-select: none;
 }
 
 .btn-primary {
@@ -164,6 +165,7 @@ header {
   position: relative;
   padding: 5px 0;
   font-size: 1.05rem;
+  transition: color 0.3s ease;
 }
 
 .nav-links a::after {
@@ -188,163 +190,163 @@ header {
 
 /* ===== CART PAGE STYLES ===== */
 .cart-page {
-    max-width: 1000px;
-    padding: 40px 20px;
+  max-width: 1000px;
+  padding: 40px 20px;
 }
 
 .cart-title {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    font-size: 2.5rem;
-    color: var(--text-dark);
-    position: relative;
-    padding-bottom: 15px;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 2.5rem;
+  color: var(--text-dark);
+  position: relative;
+  padding-bottom: 15px;
 }
 
 .cart-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 4px;
-    background: var(--primary-color);
-    border-radius: 2px;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: 2px;
 }
 
 .cart-items-container {
-    width: 100%;
-    margin: 2rem 0;
-    background: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
+  width: 100%;
+  margin: 2rem 0;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
 }
 
 .cart-item {
-    display: flex;
-    align-items: center;
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--light-gray);
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--light-gray);
 }
 
 .cart-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .cart-item i {
-    font-size: 1.8rem;
-    color: var(--primary-color);
-    margin-right: 1.5rem;
-    min-width: 40px;
-    text-align: center;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-right: 1.5rem;
+  min-width: 40px;
+  text-align: center;
 }
 
 .item-desc {
-    flex-grow: 1;
-    text-align: left;
-    padding-right: 1.5rem;
-    font-weight: 500;
-    font-size: 1.1rem;
+  flex-grow: 1;
+  text-align: left;
+  padding-right: 1.5rem;
+  font-weight: 500;
+  font-size: 1.1rem;
 }
 
 .quantity-input {
-    width: 70px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    text-align: center;
-    margin: 0 15px;
+  width: 70px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  text-align: center;
+  margin: 0 15px;
 }
 
 .cart-item-price {
-    min-width: 120px;
-    text-align: right;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: var(--text-dark);
+  min-width: 120px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-dark);
 }
 
 .remove-btn {
-    background: none;
-    border: none;
-    color: #dc3545;
-    cursor: pointer;
-    font-size: 1.3rem;
-    margin-left: 20px;
-    transition: all 0.3s ease;
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 1.3rem;
+  margin-left: 20px;
+  transition: all 0.3s ease;
 }
 
 .remove-btn:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .cart-summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2.5rem;
-    padding: 1.8rem;
-    background: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.5rem;
+  padding: 1.8rem;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
 .cart-total {
-    font-size: 1.5rem;
-    font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .cart-total span {
-    color: var(--primary-color);
-    font-size: 1.6rem;
-    margin-left: 10px;
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  margin-left: 10px;
 }
 
 .empty-cart-message {
-    text-align: center;
-    padding: 3rem;
-    font-size: 1.2rem;
-    color: #666;
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: #666;
 }
 
 /* Responsive cart */
 @media (max-width: 768px) {
-    .cart-item {
-        flex-wrap: wrap;
-        position: relative;
-        padding: 1.2rem;
-    }
-    
-    .remove-btn {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-    }
-    
-    .quantity-input {
-        margin: 15px 0;
-        order: 3;
-        width: 100%;
-    }
-    
-    .cart-item-price {
-        text-align: left;
-        order: 2;
-        min-width: auto;
-    }
-    
-    .cart-summary {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .cart-total {
-        text-align: center;
-        width: 100%;
-    }
+  .cart-item {
+    flex-wrap: wrap;
+    position: relative;
+    padding: 1.2rem;
+  }
+  
+  .remove-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+  
+  .quantity-input {
+    margin: 15px 0;
+    order: 3;
+    width: 100%;
+  }
+  
+  .cart-item-price {
+    text-align: left;
+    order: 2;
+    min-width: auto;
+  }
+  
+  .cart-summary {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .cart-total {
+    text-align: center;
+    width: 100%;
+  }
 }
 
 .menu-toggle {
@@ -534,5 +536,10 @@ footer {
 }
 
 .footer-bottom {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  color: #bbb;
   text-align: center;
- 
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1rem 0 0;
+}
