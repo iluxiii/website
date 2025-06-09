@@ -28,29 +28,60 @@
   </header>
 
   <main class="page-container">
-    <h1 class="section-title">Nasze Produkty</h1>
-    <div class="products-container">
-      <div class="product-card">
-        <div class="product-badge">Nowość</div>
-        <div class="product-img"><i class="fas fa-box-open"></i></div>
-        <div class="product-info">
-          <h3>Produkt A</h3>
-          <div class="product-options">
-            <select>
-              <option>Wariant 1</option>
-              <option>Wariant 2</option>
-            </select>
-          </div>
-          <p>Opis produktu A, który jest bardzo dobry i przydatny.</p>
-          <div class="product-price">99,99 zł</div>
-          <div class="product-actions">
-            <button class="btn btn-primary action-btn">Kup teraz</button>
-            <button class="btn btn-outline action-btn">Dodaj do koszyka</button>
-          </div>
+        <h1 class="section-title">Nasze Produkty</h1>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; color: #555;">
+            Odkryj wyjątkowe okazje w naszych kartonach i paletach zwrotów. Każdy produkt to niespodzianka pełna wartościowych przedmiotów po atrakcyjnych cenach.
+        </p>
+        
+        <div class="products-container">
+            <!-- Product 1: Karton mix ABC -->
+            <div class="product-card">
+                <div class="product-badge">TOP SPRZEDAŻ</div>
+                <div class="product-img">
+                    <i class="fas fa-box fa-3x"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Karton mix ABC</h3>
+                    <div class="product-options">
+                        <select class="product-option" id="karton-option">
+                            <option value="small" data-price="299.99">Mały karton (5-7kg) - 299,99 zł</option>
+                            <option value="medium" data-price="399.99">Średni karton (8-10kg) - 399,99 zł</option>
+                            <option value="large" data-price="499.99">Duży karton (11-15kg) - 499,99 zł</option>
+                        </select>
+                    </div>
+                    <p>Mix zwróconych produktów różnych kategorii w jednym kartonie. Idealny dla osób zaczynających przygodę z zakupem zwrotów.</p>
+                    <div class="product-price">299,99 zł</div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary add-to-cart">Dodaj do koszyka</button>
+                        <a href="#" class="btn btn-outline">Szczegóły</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 2: Paleta zwrotów -->
+            <div class="product-card">
+                <div class="product-badge">PROFESJONALNE</div>
+                <div class="product-img">
+                    <i class="fas fa-pallet fa-3x"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Paleta zwrotów</h3>
+                    <div class="product-options">
+                        <select class="product-option" id="paleta-option">
+                            <option value="small" data-price="1499.99">Paleta mała (10-15 kartonów) - 1499,99 zł</option>
+                            <option value="medium" data-price="2499.99">Paleta średnia (16-25 kartonów) - 2499,99 zł</option>
+                            <option value="large" data-price="3499.99">Paleta duża (26-35 kartonów) - 3499,99 zł</option>
+                        </select>
+                    </div>
+                    <p>Pełna paleta zwróconych produktów w różnych kategoriach. Idealna dla sklepów i przedsiębiorców.</p>
+                    <div class="product-price">1499,99 zł</div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary add-to-cart">Dodaj do koszyka</button>
+                        <a href="#" class="btn btn-outline">Szczegóły</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- Dodaj więcej produktów tutaj -->
-    </div>
 
     <section class="benefits">
       <h2 class="section-title">Dlaczego warto u nas kupować?</h2>
