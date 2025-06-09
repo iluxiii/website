@@ -4,346 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Produkty - BulkReturns | Hurtowe zakupy zwrotów konsumenckich</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
-  <style>
-    /* ===== GLOBAL STYLES ===== */
-    :root {
-      --primary-color: #218838; /* Green */
-      --secondary-color: #007bff; /* Blue */
-      --accent-color: #ffc107; /* Yellow */
-      --text-dark: #343a40;
-      --text-light: #f8f9fa;
-      --light-gray: #e9ecef;
-      --dark-green: #1a6e2c;
-      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      --border-radius: 8px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana,
-        sans-serif;
-      line-height: 1.7;
-      color: var(--text-dark);
-      background-color: #f8f9fa;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .page-container {
-      flex: 1;
-      padding: 30px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-      transition: color 0.3s ease;
-    }
-
-    a:hover {
-      color: var(--primary-color);
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .section-title {
-      text-align: center;
-      margin: 3rem 0 2rem;
-      font-size: 2.2rem;
-      color: var(--text-dark);
-      position: relative;
-      font-weight: 700;
-    }
-
-    .section-title::after {
-      content: "";
-      display: block;
-      width: 100px;
-      height: 4px;
-      background: var(--primary-color);
-      margin: 1rem auto;
-      border-radius: 2px;
-    }
-
-    /* ===== BUTTON STYLES ===== */
-    .btn {
-      display: inline-block;
-      padding: 12px 25px;
-      border-radius: var(--border-radius);
-      text-align: center;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      font-size: 1rem;
-    }
-
-    .btn-primary {
-      background-color: var(--primary-color);
-      color: white;
-      border-color: var(--primary-color);
-    }
-
-    .btn-primary:hover {
-      background-color: var(--dark-green);
-      border-color: var(--dark-green);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-outline {
-      background-color: transparent;
-      border-color: var(--primary-color);
-      color: var(--primary-color);
-    }
-
-    .btn-outline:hover {
-      background-color: var(--primary-color);
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    .action-btn {
-      padding: 10px 18px;
-      font-size: 1rem;
-      margin: 8px 5px;
-    }
-
-    /* ===== HEADER PLACEHOLDER ===== */
-    #header-placeholder {
-      width: 100%;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    /* ===== PRODUCT STYLES ===== */
-    .products-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2.5rem;
-      margin: 2.5rem auto;
-      width: 100%;
-      justify-content: center;
-    }
-
-    .product-card {
-      background: white;
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      box-shadow: var(--box-shadow);
-      transition: all 0.3s ease;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .product-card:hover {
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-      transform: translateY(-5px);
-    }
-
-    .product-badge {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      background: var(--accent-color);
-      color: var(--text-dark);
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-weight: bold;
-      font-size: 0.9rem;
-      z-index: 10;
-    }
-
-    .product-img {
-      height: 230px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #f8f9fa;
-      color: var(--primary-color);
-      margin-bottom: 1.5rem;
-      padding: 20px;
-    }
-
-    .product-img i {
-      font-size: 3rem;
-    }
-
-    .product-info {
-      padding: 1.5rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-info h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.75rem;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
-
-    .product-options {
-      margin-bottom: 1rem;
-      width: 100%;
-    }
-
-    .product-options select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .product-info p {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      color: #666;
-      flex-grow: 1;
-    }
-
-    .product-price {
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
-
-    .product-actions {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: auto;
-    }
-
-    .product-actions .btn {
-      flex: 1;
-    }
-
-    /* ===== BENEFITS SECTION ===== */
-    .benefits {
-      background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)),
-        url("https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3")
-          no-repeat center center/cover;
-      padding: 60px 20px;
-      border-radius: var(--border-radius);
-      margin: 50px 0;
-    }
-
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .benefit-card {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px 20px;
-      border-radius: var(--border-radius);
-      text-align: center;
-      box-shadow: var(--box-shadow);
-      transition: all 0.3s ease;
-    }
-
-    .benefit-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .benefit-icon {
-      font-size: 2.5rem;
-      color: var(--primary-color);
-      margin-bottom: 20px;
-    }
-
-    .benefit-card h3 {
-      margin-bottom: 15px;
-      color: var(--text-dark);
-    }
-
-    /* ===== FOOTER STYLES ===== */
-    footer {
-      background-color: #2c3e50;
-      color: white;
-      padding: 4rem 2rem 2rem;
-      margin-top: auto;
-      width: 100%;
-      text-align: center;
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 3rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      justify-content: center;
-    }
-
-    .footer-section h4 {
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-
-    .footer-section ul li {
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-section ul li a {
-      color: white;
-      font-weight: 400;
-      font-size: 0.95rem;
-      transition: color 0.3s ease;
-    }
-
-    .footer-section ul li a:hover {
-      color: var(--primary-color);
-    }
-
-    .footer-bottom {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #bbb;
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <header>
+    <div class="navbar-container">
+      <div class="logo">
+        <h1>BulkReturns</h1>
+      </div>
+      <div class="nav-container">
+        <nav class="nav-links">
+          <a href="index.html">Strona Główna</a>
+          <a href="produkty.html" class="active">Produkty</a>
+          <a href="o_nas.html">O nas</a>
+          <a href="kontakt.html">Kontakt</a>
+        </nav>
+        <div class="cart-icon">
+          <a href="koszyk.html"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <main class="page-container">
     <h1 class="section-title">Nasze Produkty</h1>
     <div class="products-container">
-      <!-- Przykładowa karta produktu -->
       <div class="product-card">
         <div class="product-badge">Nowość</div>
         <div class="product-img"><i class="fas fa-box-open"></i></div>
@@ -363,7 +49,7 @@
           </div>
         </div>
       </div>
-      <!-- Możesz dodać więcej produktów tutaj -->
+      <!-- Dodaj więcej produktów tutaj -->
     </div>
 
     <section class="benefits">
@@ -390,32 +76,37 @@
 
   <footer>
     <div class="footer-content">
-      <div class="footer-section">
-        <h4>BulkReturns</h4>
+      <div class="footer-column">
+        <h3>BulkReturns</h3>
         <ul>
           <li><a href="#">O nas</a></li>
           <li><a href="#">Kontakt</a></li>
           <li><a href="#">Polityka prywatności</a></li>
         </ul>
       </div>
-      <div class="footer-section">
-        <h4>Produkty</h4>
+      <div class="footer-column">
+        <h3>Produkty</h3>
         <ul>
           <li><a href="#">Zwroty RTV</a></li>
           <li><a href="#">Zwroty AGD</a></li>
           <li><a href="#">Zwroty RTV</a></li>
         </ul>
       </div>
-      <div class="footer-section">
-        <h4>Kontakt</h4>
+      <div class="footer-column">
+        <h3>Kontakt</h3>
         <ul>
-          <li>Email: kontakt@bulkreturns.pl</li>
-          <li>Telefon: +48 123 456 789</li>
-          <li>Adres: ul. Przykładowa 1, 00-001 Warszawa</li>
+          <li><i class="fas fa-envelope"></i> kontakt@bulkreturns.pl</li>
+          <li><i class="fas fa-phone"></i> +48 123 456 789</li>
+          <li><i class="fas fa-map-marker-alt"></i> ul. Przykładowa 1, Warszawa</li>
         </ul>
+        <div class="social-icons">
+          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
       </div>
     </div>
-    <div class="footer-bottom">
+    <div class="copyright">
       &copy; 2025 BulkReturns. Wszelkie prawa zastrzeżone.
     </div>
   </footer>
