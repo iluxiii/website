@@ -1,32 +1,22 @@
+<!-- header.html -->
 <header>
-  <nav class="navbar">
-    <div class="navbar-container">
-      <a href="index.html" class="logo" id="main-logo">
-        <i class="fas fa-box-open fa-2x" style="color: var(--dark-green);"></i>
-        <h1 style="color: var(--dark-green);">BulkReturns</h1>
-      </a>
-
-      <button class="menu-toggle" aria-label="Toggle menu">
+  <div class="navbar-container">
+    <div class="logo">
+      <h1>BulkReturns</h1>
+    </div>
+    <div class="nav-container">
+      <nav class="nav-links">
+        <a href="#" class="active">Strona główna</a>
+        <a href="produkty.html">Produkty</a>
+        <a href="faq.html">Jak to działa?</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+      <div class="cart-icon">
+        <a href="koszyk.html"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+      </div>
+      <div class="menu-toggle">
         <i class="fas fa-bars"></i>
-      </button>
-
-      <div class="nav-container">
-        <div class="nav-links">
-          <a href="index.html" id="home-link">Strona główna</a>
-          <a href="produkty.html" id="products-link">Produkty</a>
-          <a href="faq.html" id="faq-link">FAQ</a>
-          <a href="kontakt.html" id="contact-link">Kontakt</a>
-        </div>
-        <div class="nav-icons">
-          <a href="#" class="nav-icon">
-            <i class="fas fa-search"></i>
-          </a>
-          <a href="koszyk.html" class="nav-icon cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count">0</span>
-          </a>
-        </div>
       </div>
     </div>
-  </nav>
+  </div>
 </header>
