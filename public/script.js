@@ -183,7 +183,18 @@ function addCartEventListeners() {
         });
     });
 }
+// Funkcja aktualizująca stan koszyka
+function updateCartCount(count) {
+  const cartCountElement = document.getElementById('cart-count');
+  if (cartCountElement) {
+    cartCountElement.textContent = count;
+    localStorage.setItem('cartCount', count);
+  }
+}
 
+// Inicjalizacja koszyka
+let cartCount = parseInt(localStorage.getItem('cartCount')) || 0;
+updateCartCount(cartCount);
 function initCartPage() {
     loadCart();
     renderCart();
