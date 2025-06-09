@@ -192,8 +192,6 @@ function updateCartCount(count) {
   }
 }
 
-// Inicjalizacja koszyka
-let cartCount = parseInt(localStorage.getItem('cartCount')) || 0;
 updateCartCount(cartCount);
 function initCartPage() {
     loadCart();
@@ -213,18 +211,19 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartIcon();
 
     fetch('header.html')
-        .then(response => response.text())
-        .then(data => {
-            const headerEl = document.getElementById('header-placeholder');
-            if (headerEl) headerEl.innerHTML = data;
+    .then(response => response.text())
+    .then(data => {
+        const headerEl = document.getElementById('header-placeholder');
+        if (headerEl) {
+            headerEl.innerHTML = data;
 
-            setTimeout(() => {
-                updateCartIcon();
-                setupNavigation();
-                setupMobileMenu();
-            }, 0);
-        })
-        .catch(error => console.error('Error loading header:', error));
+            // Przenieś inicjalizację tutaj, aby miała dostęp do wstawionych elementów
+            setupNavigation();
+            setupMobileMenu();
+            updateCartIcon();
+        }
+    })
+    .catch(error => console.error('Error loading header:', error));
 
     fetch('footer.html')
         .then(response => response.text())
